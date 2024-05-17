@@ -4,22 +4,27 @@ export function rotate(e: any) {
   e.preventDefault();
   const obj = e.target;
   const tooltipText = obj?.dataset.originalTitle;
+  //-- tao mang Ipa --//
   const rawArrayAll = tooltipText.split(" ");
   const rawArrayAllIpa = rawArrayAll.filter((word: string) => {
     return word.includes("[") && word.includes("]");
   });
-  const sumWithInitial = rawArrayAllIpa.reduce((accumulator: string[], currentValue: string) => {
+  //-- Loai bo ky tu thua --//
+  const finalArrayIpa = rawArrayAllIpa.reduce((accumulator: string[], currentValue: string) => {
     return accumulator.concat(currentValue.slice(1, currentValue.indexOf("]")));
   }, []);
-  console.log("🚀 ~ rotate ~ sumWithInitial:", sumWithInitial);
+
+  //-- Thay doi Ipa --//
   var oldIpa = obj.innerHTML;
+  let indexOfOldIpa = finalArrayIpa.indexOf(oldIpa);
+  const lengthOfArray = finalArrayIpa.length - 1;
   var newIpa = oldIpa;
-  var a = eval(obj.id);
-  var l = a.length;
-  // while (l--) {
-  //   newIpa = a.rotate(1)[0];
-  //   if (newIpa != oldIpa) break;
-  // }
+  if (indexOfOldIpa < lengthOfArray) {
+    newIpa = finalArrayIpa[indexOfOldIpa + 1];
+  } else if (indexOfOldIpa == lengthOfArray) {
+    newIpa = finalArrayIpa[0];
+  }
+
   obj.innerHTML = newIpa;
   return false;
 }

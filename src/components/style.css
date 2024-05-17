@@ -12,6 +12,16 @@
 
 
 } */
+
+.item{
+	width: 100%;
+	margin-bottom: 15px;
+	padding-top: 5px;
+}
+.textarea-fill-outline.sc-ion-textarea-md-h{
+	margin-top: 5px;
+}
+
 a {
 	text-decoration: none;
 }
@@ -65,7 +75,7 @@ hr {
 
 .transcribed_word {
 	white-space: nowrap;
-	font-style: italic;
+	/* font-style: italic; */
 	color: gray;
 }
 

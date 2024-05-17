@@ -23,3 +23,10 @@
 #container a {
   text-decoration: none;
 }
+
+#audio {
+  position: fixed;
+  bottom: 10px;
+  width: 90%;
+  left: 5%;
+}

@@ -1,22 +1,21 @@
 import { useEffect, useRef, useState } from "react";
+import { rotate } from "../functions/changeIpa";
 import "./ExploreContainer.css";
 import "./style.css";
-import { data } from "../var";
-import { rotate } from "../functions/changeIpa";
-import postDataToDB from "../api/postDataToDB";
-import getDataFromDB from "../api/getDataFromDB";
-import { test } from "../functions/script";
+import { IonButton } from "@ionic/react";
+import postDataToStorage from "../api/postDataToStorage";
 
 
 
 interface ContainerProps {
   name: string;
-}
 
+}
 const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
   const refData = useRef("");
   const [state, setState] = useState(false);
   const [content, setContent] = useState("");
+  
   useEffect(() => {
     const elm = document.getElementById("container");
     // const  containerUpload = [{ref: 'test/1', data: 'function f() { lead2_val = ["lid", "lɛd"]; knew2_val = ["nu", "nju"]; what2_val = ["wɑt", "wʌt"]; was2_val = ["wʌz", "wɑz"]; will2_val = ["wɪl", "wəl"]; your2_val = ["jʊər", "jɔr"]; you_re2_val = ["jʊr", "jur"]; i_m2_val = ["aɪm", "əm"]; with2_val = ["wɪð", "wɪθ"]; on2_val = ["ɑn", "ɔn"]; listening2_val = ["ˈlɪsənɪŋ", "ˈlɪsnɪŋ"]; our3_val = ["ˈaʊər", "aʊr", "ɑr"]; perfect2_val = ["ˈpɜrˌfɪkt", "pərˈfɛkt"]; tonight2_val = ["təˈnaɪt", "tuˈnaɪt"]; stronger2_val = ["ˈstrɔŋər", "ˈstrɔŋɡər"]; anyone2_val = ["ˈɛniˌwʌn", "ˈɛniwən"]; carry2_val = ["ˈkæri", "ˈkɛri"]; secrets2_val = ["ˈsikrəts", "ˈsikrɪts"]; we_re3_val = ["wir", "wɪr", "wɜr"]; against2_val = ["əˈɡɛnst", "əˈɡeɪnst"]; we_ll2_val = ["wil", "wɪl"]; man2_val = ["mæn", "mən"]; favorite2_val = ["ˈfeɪvərɪt", "ˈfeɪvrət"]; don_t2_val = ["doʊnt", "doʊn"]; console.log("check2"); }'}]
@@ -26,6 +25,8 @@ const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
   }, []);
   return (
     <div id="container">
+     
+      <audio id="audio" controls src="https://firebasestorage.googleapis.com/v0/b/englishlearning-7cbbd.appspot.com/o/testname?alt=media&token=6e483b4e-22fb-4736-8de5-4bccac19029e"></audio>
       <div id="transcr_output">
         <div className="inline_unit">
           <div className="inline_orig" />

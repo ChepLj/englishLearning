@@ -1,0 +1,12 @@
+
+.createContainer{
+    box-sizing: border-box;
+}
+#textInput{
+    
+    margin: 5px;
+    width: 90%;
+    height: 70vh;
+    background-color: aliceblue;
+    
+}
