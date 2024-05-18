@@ -10,3 +10,13 @@
     background-color: aliceblue;
     
 }
+
+#uploadProgress {
+    padding: 2px;
+    position: fixed;
+    top :40%;
+    width: 90%;
+    left: 5%;
+    z-index: 10;
+    background-color: rgba(255, 127, 225, 0.773);
+}

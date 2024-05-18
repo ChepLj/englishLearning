@@ -1,16 +1,17 @@
+
+
 //TODO: change Ipa
 
-export function rotate(e: any) {
-  e.preventDefault();
-  const obj = e.target;
+function rotate(obj) {
+
   const tooltipText = obj?.dataset.originalTitle;
   //-- tao mang Ipa --//
   const rawArrayAll = tooltipText.split(" ");
-  const rawArrayAllIpa = rawArrayAll.filter((word: string) => {
+  const rawArrayAllIpa = rawArrayAll.filter((word) => {
     return word.includes("[") && word.includes("]");
   });
   //-- Loai bo ky tu thua --//
-  const finalArrayIpa = rawArrayAllIpa.reduce((accumulator: string[], currentValue: string) => {
+  const finalArrayIpa = rawArrayAllIpa.reduce((accumulator, currentValue) => {
     return accumulator.concat(currentValue.slice(1, currentValue.indexOf("]")));
   }, []);
 
@@ -26,7 +27,7 @@ export function rotate(e: any) {
   }
 
   obj.innerHTML = newIpa;
-  return false;
+  return false; // return false de loai bo hanh vi mac dinh cua the a
 }
 
 //TODO_END: change Ipa

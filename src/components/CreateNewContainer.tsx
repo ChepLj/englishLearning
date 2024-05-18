@@ -1,19 +1,24 @@
-import { IonAlert, IonButton, IonGrid, IonInput, IonItem, IonRow, IonTextarea } from "@ionic/react";
+import { IonAlert, IonButton, IonGrid, IonHeader, IonInput, IonItem, IonProgressBar, IonRow, IonTextarea, IonTitle, IonToolbar } from "@ionic/react";
 import postDataToStorage from "../api/postDataToStorage";
 import "./CreateNewContainer.css";
 import postDataToDB from "../api/postDataToDB";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import getDataFromDB from "../api/getDataFromDB";
 import { ref } from "firebase/storage";
+import { MAIN_CONTEXT } from "../App";
 interface ContainerProps {
   name: string;
 }
+interface ITF_InputElm extends HTMLIonInputElement {
+  clearTextInput:Function
+}
 
 const CreateNewContainer: React.FC<ContainerProps> = ({ name }) => {
+  const {setRefresh} = useContext<any>(MAIN_CONTEXT);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [html, setHtml] = useState("");
-  const songNameRef = useRef<HTMLIonInputElement>(null);
-  const fileRef = useRef<HTMLIonInputElement>(null);
+  const [progress, setProgress] = useState(0);
+  const songNameRef = useRef<ITF_InputElm>(null);
   const lyricsRef = useRef<HTMLIonTextareaElement>(null);
   const upload = () => {
     const fileElm = document.getElementById("file") as HTMLInputElement;
@@ -27,7 +32,7 @@ const CreateNewContainer: React.FC<ContainerProps> = ({ name }) => {
     // go Upload
     const goUpload = () => {
       //TODO: upload all
-      const uploadAll = (result, url) => {
+      const uploadAll = (result, url, progress) => {
         if (result === "Upload completed successfully") {
           const key = Date.now();
           const dataObj = {
@@ -45,15 +50,32 @@ const CreateNewContainer: React.FC<ContainerProps> = ({ name }) => {
               data: dataObj,
             },
           ];
+          const handelUploadCallback = (result:string) => {
+            console.log("🚀 ~ handelUploadCallback ~ result:", result)
 
-          postDataToDB(uploadContainer, ()=>setIsAlertOpen(true));
+            if(result =="post successfully!"){
+              setIsAlertOpen(true)
+              fileElm.value = ''
+              songNameRef.current?.clearTextInput()
+              const elm =  document.getElementById('ion-textarea-0') as HTMLInputElement
+              elm.value = ''
+              setRefresh(Math.random())
+            }else {
+              alert("Upload Failed");
+            }
+          }
+          postDataToDB(uploadContainer, handelUploadCallback);
         } else {
-          alert("Upload Failed");
+          alert("Upload audio file Failed");
           console.log(url);
         }
       };
       //! upload file first
-      postDataToStorage(file, "test", songName, uploadAll);
+      const handleProgressCallback = (obj)=>{
+        const progressCurrentValue = (obj.bytesTransferred/obj.totalBytes)
+        setProgress(progressCurrentValue)
+      }
+      postDataToStorage(file, "SONGS/", songName, uploadAll, handleProgressCallback);
     };
     //TODO_END: upload all
     // validate
@@ -74,6 +96,24 @@ const CreateNewContainer: React.FC<ContainerProps> = ({ name }) => {
 
   return (
     <IonGrid>
+      {progress > 0 && progress < 1 ? (
+        <div id="uploadProgress">
+          <h4>uploading...</h4>
+          <IonProgressBar value={progress}></IonProgressBar>
+        </div>
+      ) : (
+        ""
+      )}
+
+     
+      <IonRow>
+        <IonItem>
+          <IonButton expand="full" style={{ width: "100%" }} onClick={upload}>
+            Upload
+          </IonButton>
+        </IonItem>
+        <IonAlert isOpen={isAlertOpen} header="Upload Successfully" subHeader={`${songNameRef.current?.value}`} message="Open the menu to view new song" buttons={["ok"]} onDidDismiss={() => setIsAlertOpen(false)}></IonAlert>
+      </IonRow>
       <IonRow>
         <IonItem>
           <IonInput ref={songNameRef} label="Song Name" labelPlacement="floating" color="danger"></IonInput>
@@ -90,14 +130,7 @@ const CreateNewContainer: React.FC<ContainerProps> = ({ name }) => {
           {/* <textarea id="textInput"></textarea> */}
         </IonItem>
       </IonRow>
-      <IonRow>
-        <IonItem>
-          <IonButton expand="full" style={{ width: "100%" }} onClick={upload}>
-            Upload
-          </IonButton>
-        </IonItem>
-        <IonAlert isOpen={isAlertOpen} header="Upload Successfully" subHeader="" message="Back to home page" buttons={["Back"]} onDidDismiss={() => setIsAlertOpen(false)}></IonAlert>
-      </IonRow>
+
     </IonGrid>
   );
 };

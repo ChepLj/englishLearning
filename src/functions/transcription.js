@@ -1,13 +1,10 @@
 
 
-// initialise tooltips
-jQuery(function () {
-  jQuery('[data-toggle="tooltip"]').tooltip();
-});
 
-
-
-
-
+export default function tooltipInit (){
+  jQuery(function () {
+    jQuery('[data-toggle="tooltip"]').tooltip();
+  });
+} 
 
 
