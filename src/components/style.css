@@ -12,7 +12,9 @@
 
 
 } */
-
+.no-margin{
+	margin: 0 !important;
+}
 .item{
 	width: 100%;
 	margin-bottom: 15px;
@@ -164,20 +166,6 @@ hr {
 
 textarea:invalid+input[type="button"] {
 	display: none;
-}
-
-#clear_button {
-	background-image: url('/wp-content/plugins/transcription/clear.png');
-	background-position: top right;
-	background-repeat: no-repeat;
-	height: 1.4rem;
-	width: 1.4rem;
-	border: none;
-	background-color: transparent;
-	cursor: pointer;
-	position: absolute;
-	top: .2rem;
-	right: .9rem;
 }
 
 #adsense_container_1 {

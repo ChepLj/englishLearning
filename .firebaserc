@@ -1,0 +1,16 @@
+{
+  "projects": {
+    "default": "musicenglishlearning"
+  },
+  "targets": {
+    "englishlearning-7cbbd": {
+      "hosting": {
+        "main": [
+          "musicenglishlearning"
+        ]
+      }
+    }
+  },
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
+}

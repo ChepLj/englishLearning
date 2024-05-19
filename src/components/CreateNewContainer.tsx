@@ -20,6 +20,7 @@ const CreateNewContainer: React.FC<ContainerProps> = ({ name }) => {
   const [progress, setProgress] = useState(0);
   const songNameRef = useRef<ITF_InputElm>(null);
   const lyricsRef = useRef<HTMLIonTextareaElement>(null);
+
   const upload = () => {
     const fileElm = document.getElementById("file") as HTMLInputElement;
     const file = fileElm.files?.[0];
@@ -51,15 +52,15 @@ const CreateNewContainer: React.FC<ContainerProps> = ({ name }) => {
             },
           ];
           const handelUploadCallback = (result:string) => {
-            console.log("🚀 ~ handelUploadCallback ~ result:", result)
 
             if(result =="post successfully!"){
-              setIsAlertOpen(true)
+              setRefresh(Math.random())
+              const elm =  document.getElementsByClassName('native-textarea')[0] as HTMLInputElement
+
+              elm.value = ''
               fileElm.value = ''
               songNameRef.current?.clearTextInput()
-              const elm =  document.getElementById('ion-textarea-0') as HTMLInputElement
-              elm.value = ''
-              setRefresh(Math.random())
+              setIsAlertOpen(true)
             }else {
               alert("Upload Failed");
             }
@@ -126,7 +127,7 @@ const CreateNewContainer: React.FC<ContainerProps> = ({ name }) => {
       </IonRow>
       <IonRow>
         <IonItem>
-          <IonTextarea ref={lyricsRef} label="lyrics" labelPlacement="floating" fill="outline" placeholder="Enter text" autoGrow></IonTextarea>
+          <IonTextarea ref={lyricsRef} label="lyrics" labelPlacement="floating" fill="outline" placeholder="Enter text" autoGrow key={1}></IonTextarea>
           {/* <textarea id="textInput"></textarea> */}
         </IonItem>
       </IonRow>

@@ -1,8 +1,8 @@
 import { ref, getDownloadURL } from "firebase/storage";
 import { storage } from "./firebase/firebaseConfig";
 import { ITF_drawingContentItem } from "../interface/interface";
-import { MIMEtype } from "../component/MIMEtype";
-import { getKeyByValue } from "../component/FCComponent/getKeyByValue";
+// import { MIMEtype } from "../component/MIMEtype";
+// import { getKeyByValue } from "../component/FCComponent/getKeyByValue";
 import getDataFromDB from "./getDataFromDB";
 import * as fs from "fs";
 import * as https from "https";

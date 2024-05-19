@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Ionic App 222333</title>
+    <title>Music English Learning</title>
     
     <base href="/" />
     
@@ -17,7 +17,8 @@
     <link rel="manifest" href="/manifest.json" />
     
     <link rel="shortcut icon" type="image/png" href="/favicon.png" />
-    
+    <!-- dark mode -->
+    <link id="darkMode" rel="stylesheet" type="text/css" href="./src/theme/dark.system.css"  disabled="disabled"/>
     <!-- add to homescreen for ios -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Ionic App" />
@@ -25,8 +26,10 @@
      <!-- add user function-->
     <script src=https://c0.wp.com/c/6.5.3/wp-includes/js/jquery/jquery.min.js id=jquery-core-js></script>
     <script src=https://c0.wp.com/c/6.5.3/wp-includes/js/jquery/jquery-migrate.min.js id=jquery-migrate-js></script>
-    <script src="./src/functions/child-theme.min.js" id=child-understrap-scripts-js></script>
-    <script src="./src/functions/changeIpa.js" id=changeIpa-ts></script>
+    <script src="https://tophonetics.com/wp-content/themes/understrap-child/js/child-theme.min.js?ver=0.5.3" id="child-understrap-scripts-js"></script>
+    <!-- <script type="module" src="./src/functions/child-theme.min.js" id=child-understrap-scripts-js></script> -->
+    <!-- <script type="text/javascript"  src="./src/functions/changeIpa.js" id=changeIpa-ts></script> -->
+    <script>function rotate(obj) {const tooltipText = obj?.dataset.originalTitle; const rawArrayAll = tooltipText.split(" "); const rawArrayAllIpa = rawArrayAll.filter((word) => { return word.includes("[") && word.includes("]"); }); const finalArrayIpa = rawArrayAllIpa.reduce((accumulator, currentValue) => { return accumulator.concat(currentValue.slice(1, currentValue.indexOf("]"))); }, []); var oldIpa = obj.innerHTML; let indexOfOldIpa = finalArrayIpa.indexOf(oldIpa); const lengthOfArray = finalArrayIpa.length - 1; var newIpa = oldIpa; if (indexOfOldIpa < lengthOfArray) { newIpa = finalArrayIpa[indexOfOldIpa + 1]; } else if (indexOfOldIpa == lengthOfArray) { newIpa = finalArrayIpa[0]; } obj.innerHTML = newIpa; return false; }</script>
     
   </head>
   <body>

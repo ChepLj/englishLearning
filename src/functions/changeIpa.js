@@ -1,9 +1,9 @@
 
+alert('ok1')
 
-//TODO: change Ipa
 
 function rotate(obj) {
-
+  alert("check")
   const tooltipText = obj?.dataset.originalTitle;
   //-- tao mang Ipa --//
   const rawArrayAll = tooltipText.split(" ");
@@ -30,4 +30,4 @@ function rotate(obj) {
   return false; // return false de loai bo hanh vi mac dinh cua the a
 }
 
-//TODO_END: change Ipa
+

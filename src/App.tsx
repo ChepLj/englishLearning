@@ -29,7 +29,7 @@ import "@ionic/react/css/display.css";
 
 /* import '@ionic/react/css/palettes/dark.always.css'; */
 /* import '@ionic/react/css/palettes/dark.class.css'; */
-import '@ionic/react/css/palettes/dark.system.css';
+// import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import "./theme/variables.css";
@@ -41,15 +41,16 @@ setupIonicReact();
 const MAIN_CONTEXT = createContext({});
 
 const App: React.FC = () => {
+  
   const [refresh, setRefresh] = useState<number>(0);
   const [data, setData] = useState<any>();
   const [bucket, setBucket] = useState<string>('/');
-
+ 
   useEffect(() => {
     if (bucket) {
       const callback = (disPatch: any) => {
         if (disPatch.type === "SUCCESSFUL") {
-          console.log("🚀 ~ callback ~ disPatch:", disPatch)
+          // console.log("🚀 ~ callback ~ disPatch:", disPatch)
           setData(disPatch.payload);
         } else {
           alert("cant get data from sever");
@@ -58,7 +59,13 @@ const App: React.FC = () => {
       getDataFromDB(bucket, callback);
     }
   }, [refresh]);
-
+  // useEffect(()=>{
+  //   const scriptElm1 = document.getElementById('child-understrap-scripts-js')
+  //   console.dir(scriptElm1?.attributes)
+  //   scriptElm1?.removeAttribute('type')
+  //   const scriptElm2 = document.getElementById('changeIpa-ts')
+  //   console.dir(scriptElm2?.attributes)
+  // },[])
   return (
     <IonApp>
       <MAIN_CONTEXT.Provider value={{ refresh, setRefresh, setBucket , data}}>

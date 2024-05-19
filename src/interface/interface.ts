@@ -91,3 +91,12 @@ export interface ITF_AuthorLogin {
   photoURL:string;
   provider:string;
 }
+
+export interface ITF_SongData {
+  isFavorite: boolean;
+  karaokeURL: string;
+  key: string | number;
+  lyrics: string;
+  name: string;
+  songURL: string;
+}

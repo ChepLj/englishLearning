@@ -3,7 +3,7 @@ import { IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu
 import { createOutline, musicalNotesOutline } from "ionicons/icons";
 import { useLocation } from "react-router-dom";
 import "./Menu.css";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { MAIN_CONTEXT } from "../App";
 
 interface AppPage {
@@ -14,12 +14,12 @@ interface AppPage {
 }
 
 
-
 //const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
 const Menu: React.FC = () => {
   const location = useLocation();
   const { data } = useContext<any>(MAIN_CONTEXT);
+  const darkModeRef = useRef<HTMLIonToggleElement>(null)
   const appPages: AppPage[] = [
     {
       title: "Create",
@@ -30,7 +30,7 @@ const Menu: React.FC = () => {
   ];
   if (data) {
     const songsObj = data.SONGS;
-    const songsArray: AppPage[] = [];
+    var songsArray: AppPage[] = [];
 
     for (const key in songsObj) {
       const obj = {
@@ -44,14 +44,26 @@ const Menu: React.FC = () => {
     }
     Array.prototype.push.apply(appPages, songsArray.reverse());
   }
+
+  // dark mode toggle
+  const darkModeToggle = ()=>{
+    const elm = document.getElementById('darkMode')
+    if(darkModeRef?.current?.checked){
+      elm!.removeAttribute("disabled")
+    }
+    else{
+      elm!.setAttribute('disabled', 'disabled')
+    } 
+  }
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
         <IonList id="inbox-list">
           <IonListHeader>Song List</IonListHeader>
+          <IonNote className="no-margin">{`${appPages.length -1} songs`}</IonNote>
+          <br></br>
           <IonItem>
-            <IonNote>50 songs</IonNote>
-            <IonToggle  checked={true}>Dark mode</IonToggle>
+            <IonToggle ref={darkModeRef} checked={darkModeRef?.current?.checked} onClick={darkModeToggle}>Dark mode</IonToggle>
           </IonItem>
           {appPages.map((appPage, index) => {
             return (
