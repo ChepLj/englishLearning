@@ -35,6 +35,7 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 import { createContext, useEffect, useState } from "react";
 import getDataFromDB from "./api/getDataFromDB";
+import { removeTooltip } from "./functions/removeTooltip";
 
 setupIonicReact();
 
@@ -59,13 +60,10 @@ const App: React.FC = () => {
       getDataFromDB(bucket, callback);
     }
   }, [refresh]);
-  // useEffect(()=>{
-  //   const scriptElm1 = document.getElementById('child-understrap-scripts-js')
-  //   console.dir(scriptElm1?.attributes)
-  //   scriptElm1?.removeAttribute('type')
-  //   const scriptElm2 = document.getElementById('changeIpa-ts')
-  //   console.dir(scriptElm2?.attributes)
-  // },[])
+
+
+
+
   return (
     <IonApp>
       <MAIN_CONTEXT.Provider value={{ refresh, setRefresh, setBucket , data}}>

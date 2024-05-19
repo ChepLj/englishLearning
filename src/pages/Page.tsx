@@ -9,6 +9,7 @@ import "./Page.css";
 import deleteFileFromStorage from "../api/deleteFileFromStorage";
 import { ITF_SongData, ITF_UploadContainer } from "../interface/interface";
 import postDataToDB from "../api/postDataToDB";
+import { removeTooltip } from "../functions/removeTooltip";
 
 const Page: React.FC = () => {
   const { name } = useParams<{ name: string }>();
@@ -17,9 +18,9 @@ const Page: React.FC = () => {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [isAlertDeleteFileErrorOpen, setIsAlertDeleteFileErrorOpen] = useState(false);
   const songs = data?.SONGS;
-
+  let title = "Create"
   if (songs) {
-    var title = songs[name]?.name || "Create";
+    title = songs[name]?.name || "Create";
   }
 
   //TODO:  callback delete file from storage

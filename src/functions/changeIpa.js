@@ -1,9 +1,6 @@
 
-alert('ok1')
-
-
-function rotate(obj) {
-  alert("check")
+export function rotate(obj) {
+  // alert("change ipa")
   const tooltipText = obj?.dataset.originalTitle;
   //-- tao mang Ipa --//
   const rawArrayAll = tooltipText.split(" ");
