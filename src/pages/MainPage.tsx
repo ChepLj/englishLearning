@@ -35,7 +35,7 @@ const MainPage: React.FC = () => {
     if (target) {
       query = target.value!.toLowerCase();
       if (query) {
-        const newSongResults = results.filter((song) => {
+        const newSongResults = songList.current.filter((song) => {
           return song.title.toLowerCase().indexOf(query) > -1;
         });
         setResults(newSongResults);
@@ -55,7 +55,8 @@ const MainPage: React.FC = () => {
           <IonTitle slot="start" color="secondary">
             Song List
           </IonTitle>
-          <IonNote slot="end">{`${results.length} songs`}</IonNote>
+          <IonNote slot="end">{`${results.length} songs  .`}</IonNote>
+
         </IonToolbar>
         <IonToolbar>
           <IonSearchbar debounce={100} onIonInput={(ev) => handleInput(ev)}></IonSearchbar>

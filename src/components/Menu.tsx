@@ -40,7 +40,7 @@ const Menu: React.FC = () => {
     if (target) {
       query = target.value!.toLowerCase();
       if (query) {
-        const newSongResults = results.filter((song) => {
+        const newSongResults = songList.current.filter((song) => {
           return song.title.toLowerCase().indexOf(query) > -1;
         });
         setResults(newSongResults);
