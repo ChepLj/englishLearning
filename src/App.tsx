@@ -1,6 +1,6 @@
 import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Redirect, Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Menu from "./components/Menu";
 import Page from "./pages/Page";
 
@@ -13,12 +13,12 @@ import "@ionic/react/css/structure.css";
 import "@ionic/react/css/typography.css";
 
 /* Optional CSS utils that can be commented out */
-import "@ionic/react/css/padding.css";
+import "@ionic/react/css/display.css";
+import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/float-elements.css";
+import "@ionic/react/css/padding.css";
 import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
-import "@ionic/react/css/flex-utils.css";
-import "@ionic/react/css/display.css";
 
 /**
  * Ionic Dark Mode
@@ -32,21 +32,21 @@ import "@ionic/react/css/display.css";
 // import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
-import "./theme/variables.css";
 import { createContext, useEffect, useState } from "react";
 import getDataFromDB from "./api/getDataFromDB";
-import { removeTooltip } from "./functions/removeTooltip";
+import { isSupported, keepAwake } from "./functions/keepAwake";
+import MainPage from "./pages/MainPage";
+import "./theme/variables.css";
 
 setupIonicReact();
 
 const MAIN_CONTEXT = createContext({});
 
 const App: React.FC = () => {
-  
   const [refresh, setRefresh] = useState<number>(0);
   const [data, setData] = useState<any>();
-  const [bucket, setBucket] = useState<string>('/');
- 
+  const [bucket, setBucket] = useState<string>("/");
+
   useEffect(() => {
     if (bucket) {
       const callback = (disPatch: any) => {
@@ -60,23 +60,34 @@ const App: React.FC = () => {
       getDataFromDB(bucket, callback);
     }
   }, [refresh]);
-
-
-
+  // keep screen always on in mobile
+  useEffect(() => {
+    isSupported().then((result) => {
+      if (true) {
+        keepAwake();
+      }
+    });
+  }, []);
 
   return (
     <IonApp>
-      <MAIN_CONTEXT.Provider value={{ refresh, setRefresh, setBucket , data}}>
+      <MAIN_CONTEXT.Provider value={{ refresh, setRefresh, setBucket, data }}>
         <IonReactRouter>
           <IonSplitPane contentId="main">
             <Menu />
             <IonRouterOutlet id="main">
+              <Switch>
               <Route path="/" exact={true}>
-                <Redirect to="/folder/Create" />
+                <MainPage />
               </Route>
               <Route path="/folder/:name" exact={true}>
                 <Page />
               </Route>
+              <Route path="*">
+                <MainPage />
+              </Route>
+              </Switch>
+              
             </IonRouterOutlet>
           </IonSplitPane>
         </IonReactRouter>
@@ -85,4 +96,5 @@ const App: React.FC = () => {
   );
 };
 
-export  {App, MAIN_CONTEXT};
+export { App, MAIN_CONTEXT };
+

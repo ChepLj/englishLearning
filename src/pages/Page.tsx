@@ -1,15 +1,14 @@
-import { IonAlert, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonPage, IonTitle, IonToolbar } from "@ionic/react";
-import { trashOutline } from "ionicons/icons";
-import { useContext, useState } from "react";
+import { IonAlert, IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonFabList, IonHeader, IonIcon, IonMenuButton, IonPage, IonTitle, IonToolbar } from "@ionic/react";
+import { chevronDownCircle, chevronForwardCircle, colorPalette, ellipsisVertical, ellipsisVerticalOutline, globe, heartOutline, trashOutline } from "ionicons/icons";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { MAIN_CONTEXT } from "../App";
+import deleteFileFromStorage from "../api/deleteFileFromStorage";
+import postDataToDB from "../api/postDataToDB";
 import CreateNewContainer from "../components/CreateNewContainer";
 import ExploreContainer from "../components/ExploreContainer";
-import "./Page.css";
-import deleteFileFromStorage from "../api/deleteFileFromStorage";
 import { ITF_SongData, ITF_UploadContainer } from "../interface/interface";
-import postDataToDB from "../api/postDataToDB";
-import { removeTooltip } from "../functions/removeTooltip";
+import "./Page.css";
 
 const Page: React.FC = () => {
   const { name } = useParams<{ name: string }>();
@@ -17,10 +16,11 @@ const Page: React.FC = () => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [isAlertDeleteFileErrorOpen, setIsAlertDeleteFileErrorOpen] = useState(false);
+
   const songs = data?.SONGS;
-  let title = "Create"
+  let title = "";
   if (songs) {
-    title = songs[name]?.name || "Create";
+    title = songs[name]?.name || "Create New Song";
   }
 
   //TODO:  callback delete file from storage
@@ -112,28 +112,47 @@ const Page: React.FC = () => {
             <IonMenuButton />
           </IonButtons>
           <IonTitle color="secondary">{title}</IonTitle>
-          {title === "Create" ? (
+          {name === "Create" ? (
             ""
           ) : (
             <IonButtons slot="end">
-              <IonButton onClick={() => setConfirmDelete(true)}>
-                <IonIcon slot="icon-only" icon={trashOutline} color="medium"></IonIcon>
-              </IonButton>
+              <Option setConfirmDelete={setConfirmDelete} />
             </IonButtons>
           )}
         </IonToolbar>
       </IonHeader>
 
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">{title}</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        {title === "Create" ? <CreateNewContainer name={title} /> : <ExploreContainer keySong={name} key={name} />}
-      </IonContent>
+      <IonContent fullscreen>{name === "Create" ? <CreateNewContainer name={name} /> : <ExploreContainer keySong={name} />}</IonContent>
     </IonPage>
   );
 };
+
+//JSX: Option Button
+function Option({ setConfirmDelete }: { setConfirmDelete: Function }) {
+  const [background, setBackground] = useState({ button: "light", icon: "dark" });
+  const elm = document.getElementById("darkMode");
+  useEffect(() => {
+    if (elm?.hasAttribute("disabled")) {
+      setBackground({ button: "light", icon: "dark" });
+    } else {
+      setBackground({ button: "dark", icon: "light" });
+    }
+  }, [elm?.hasAttribute("disabled")]);
+  return (
+    <IonFab slot="" vertical="top" horizontal="end" edge={true}>
+      <IonFabButton size="small" color={background.button} className="check">
+        <IonIcon icon={ellipsisVertical} color={background.icon}></IonIcon>
+      </IonFabButton>
+      <IonFabList side="start">
+        <IonFabButton onClick={() => setConfirmDelete(true)}>
+          <IonIcon icon={trashOutline} color="danger"></IonIcon>
+        </IonFabButton>
+        <IonFabButton>
+          <IonIcon icon={heartOutline} color="warning"></IonIcon>
+        </IonFabButton>
+      </IonFabList>
+    </IonFab>
+  );
+}
 
 export default Page;

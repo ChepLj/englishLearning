@@ -337,3 +337,13 @@ textarea:invalid+input[type="button"] {
     background-color: #000;
     border-radius: .25rem
 }
+
+
+ion-fab {
+	margin-top: var(--ion-safe-area-top, 0);
+  }
+
+
+  ion-fab-button button {
+	background-color: red;
+  }

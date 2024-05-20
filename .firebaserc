@@ -9,6 +9,13 @@
           "musicenglishlearning"
         ]
       }
+    },
+    "musicenglishlearning": {
+      "hosting": {
+        "main": [
+          "musicenglishlearning"
+        ]
+      }
     }
   },
   "etags": {},

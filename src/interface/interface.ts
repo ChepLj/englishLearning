@@ -100,3 +100,10 @@ export interface ITF_SongData {
   name: string;
   songURL: string;
 }
+
+export interface ITF_Song {
+  url: string;
+  iosIcon: string;
+  mdIcon: string;
+  title: string;
+}
